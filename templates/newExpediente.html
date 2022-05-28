@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+
+<script type="text/javascript">
+  function mostrar(){
+      var usuario=document.getElementById("nbreUsuario").value;
+     if(usuario != ""){
+      alert("Se ingreso correctamente");
+      document.getElementById("contactForm").submit();
+     }            
+
+  }
+</script>
+<main>
+
+
+  <div class="py-2 text-center">
+    <img class="d-block mx-auto mb-2" src="{{url_for('static', filename='img/registro.png')}}" alt="logo" width="200">
+    <h2>Nuevo Expediente</h2>
+  </div>
+
+  <div class="conteiner">
+    <form class="needs-validation" novalidate action="/IngresoExpediente" method="POST">
+
+
+      <div class="row justify-content-md-center">
+        <div class="col-sm-4">
+          <label for="numExpediente" class="form-label" name="nro">N° de Expediente</label>
+          <input type="int" class="form-control" name="nro_e" placeholder="" value="" required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <label for="lastName" class="form-label" id="nbre_e">Nombre de Expediente</label>
+          <input type="text" class="form-control" name="nbre_e" placeholder="" value="" required>
+          <div class="invalid-feedback">
+            Valid last name is required.
+          </div>
+        </div>
+
+
+        <div class="w-100"></div>
+
+        <div class="col-sm-4">
+          <label for="date" class="form-label" id="fecha_e">Fecha de Expediente</label>
+          <!-- Por defecto dejar seleccionado el día de hoy y controlar que la fecha seleccionada no sea mayor a la de hoy -->
+          <input type="date" class="form-control" data-date-end-date="0d" name="fecha_e">
+          <div class="invalid-feedback">
+            Valid last name is required.
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <label for="date" class="form-label">Hora de Encuentro</label>
+          <input type="time" class="form-control" id="appt">
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+
+
+
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeIcJq-IdVvdsTFHRqizfmHJeQhQ2zaN8">
+        </script>
+        
+        <div class="w-100"></div>
+        <div class="card mb-3" style="max-width: 840px;">
+        
+          <label  class="form-label">Seleccione Lugar de Hallazgo:</label>
+          <div class="card">
+            <div  id="Mapa" width="100%" style="height: 280px;"></div>
+          </div>
+        
+
+        </div>
+        
+        <div class="w-100"></div>
+
+        <div class="col-sm-4">
+          <label for="numExpediente" class="form-label pt-2">Latitud</label>
+          <input type="number" class="form-control" id="latitude" placeholder="" value='' required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <label for="lastName" class="form-label pt-2" id="ubicacion">Longitud</label>
+          <input type="number" class="form-control" name="ubicacion" placeholder="" value='' required>
+          <div class="invalid-feedback">
+            Valid last name is required.
+          </div>
+        </div>
+
+        <div class="w-100"></div>
+
+        <div class="col-sm-4">
+          <label for="numExpediente" class="form-label pt-2" id="dire">Dirección Aproximada</label>
+          <input type="text" class="form-control" name="dire" id="input-address-formated" placeholder="" value='' required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <label for="lastName" class="form-label pt-2">Provincia</label>
+          <input type="text" class="form-control" id="input-address" placeholder="" value='' required>
+
+        </div>
+        <div class="col-sm-2">
+          <label for="lastName" class="form-label pt-2" id="ciudad">Ciudad</label>
+          <input type="text" class="form-control" name="ciudad" id="input-city" placeholder="" value='' required>
+
+        </div>
+        
+        <!-- Button trigger modal -->
+        <div class="d-grid gap-2 col-6 mt-5">
+          <input type="submit" value="Guardar" />
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Expediente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Se generó el expediente #00123
+              </div>
+              <div class="modal-footer">
+                <button type="button" href="{{ url_for('home') }}" class="btn btn-secondary"
+                  data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </form>
+  </div>
+  </div>
+  <script type="application/javascript">
+    var map;
+    var marker;
+    var lat;
+    var long;
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    function success(pos) {
+      var crd = pos.coords;
+
+      console.log('Your current position is:');
+      console.log('Latitude : ' + crd.latitude);
+      console.log('Longitude: ' + crd.longitude);
+      console.log('More or less ' + crd.accuracy + ' meters.');
+      lat = crd.latitude;
+      long = crd.longitude;
+    };
+
+    function error(err) {
+      console.warn('ERROR(' + err.code + '): ' + err.message);
+    };
+
+    navigator.geolocation.getCurrentPosition(success, error, options);
+
+    var myLatlng = new google.maps.LatLng(-33.29501, -66.33563);
+    var geocoder = new google.maps.Geocoder();
+    function initialize() {
+      var mapOptions = {
+        zoom: 15,
+        center: myLatlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      map = new google.maps.Map(document.getElementById("Mapa"), mapOptions);
+      var marker;
+      google.maps.event.addListener(map, 'click', function (event) {
+        placeMarker(event.latLng);
+      });
+
+      function placeMarker(location) {
+        if (marker == null) {
+          marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            zoom: 13
+          });
+        }
+        else {
+          marker.setPosition(location);
+        }
+        geocoder.geocode(
+          { location: location },
+          (
+            results = google.maps.GeocoderResult,
+            status = google.maps.GeocoderStatus
+          ) => {
+            if (status === "OK") {
+              if (results[0]) {
+                console.log(results[0].address_components);
+                var address_components = results[0].address_components;
+                var components = {};
+                jQuery.each(address_components, function (k, v1) { jQuery.each(v1.types, function (k2, v2) { components[v2] = v1.long_name }); });
+                var city, postal_code, state, country, sublocality, street_number, route;
+
+                console.log(components);
+                if (components.locality) {
+                  city = components.locality;
+                }
+
+                if (!city) {
+                  city = components.administrative_area_level_1;
+                }
+
+                if (components.postal_code) {
+                  postal_code = components.postal_code;
+                }
+                if (components.postal_code) {
+                  postal_code = components.postal_code;
+                }
+
+                if (components.administrative_area_level_1) {
+                  state = components.administrative_area_level_1;
+                }
+
+                if (components.route) {
+                  route = components.route;
+                }
+                if (components.sublocality_level_1) {
+                  sublocality = components.sublocality_level_1;
+                }
+                if (components.country) {
+                  country = components.country;
+                }
+                if (components.street_number) {
+                  street_number = components.street_number;
+                }
+                $('#input-address-formated').val(results[0].formatted_address);
+                $('#input-address').val(state);
+                $('#input-city').val(city);
+                $('#input-country').val(country);
+                $('#input-postal-code').val(postal_code);
+                $('#input-street').val(route + ', ' + sublocality);
+                $('#input-interior-number').val(street_number);
+                $('#input-exterior-number').val(street_number);
+                $('#latitude').val(marker.getPosition().lat());
+                $('#longitude').val(marker.getPosition().lng());
+
+              } else {
+                window.alert("No results found");
+              }
+            } else {
+              window.alert("Geocoder failed due to: " + status);
+            }
+          }
+        );
+      }
+
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+</main>
+
+{% endblock%}

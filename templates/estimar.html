@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
+<div class="py-2 text-center">
+    <img class="d-block mx-auto mb-2" src="{{url_for('static', filename='img/datar.png')}}" alt="logo" width="200">
+    <h2>Datación</h2>
+</div>
+<div class="row height d-flex justify-content-center align-items-center" style="margin-top: 50px;">
+  
+  <div class="col-md-8">
+
+    <div class="search">
+      <i class="fa fa-search"></i>
+      <input type="text" class="form-control" placeholder="Ingrese N° de Expediente">
+      <button class="btn btn-primary">Buscar</button>
+    </div>    
+  </div>  
+</div>
+
+<div class="row" style="margin-top: 80px;margin-left: 18%;">
+    <div class="col-sm-6" style="width:25% ;  " >
+      <div class="card">
+        <div class="card-body" >
+          <h5 class="card-title">Normograma</h5>
+          <img src="/static/img/nomograma.jpg"  width="10%">
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="#" class="btn btn-primary">Nomograma</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6" style="width:25% ;">
+      
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Core de datos</h5>
+            <img src="/static/img/datos.png"  width="10%">
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Core de datos</a>
+          </div>
+        </div>
+      </div>
+    <div class="col-sm-6" style="width:25% ;">
+        
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Clustering</h5>
+          <img src="/static/img/clustering.png" width="10%">
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="#" class="btn btn-primary">Clustering</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+{% endblock%}
