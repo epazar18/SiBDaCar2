@@ -40,7 +40,7 @@
     </div>
     <script>
         function habilitarForm() {
-            document.getElementById("numLegajo").disabled = false;
+           
             formulario=document.getElementById("form-cadaver")
             var num=document.getElementById("numE").value
             var element = document.getElementById("mensaje");
@@ -52,9 +52,9 @@
     </script>
 
     <div class="conteiner">
-        <form class="needs-validation" novalidate id="form-cadaver" style="display:none">
+        <form  novalidate id="form-cadaver" style="display:none" action="/IngresoCadaver" method="POST">
                 
-          <div id="mensaje" class="text-center" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ; margin-top: 10px;margin-bottom: 20px;"></div>
+          <div id="mensaje" class="text-center" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ; margin-top: 20px;margin-bottom: 20px;"></div>
                 <div class="row justify-content-md-center">
 
                 <div class="w-100"></div>
@@ -62,7 +62,7 @@
                 <div class="col-md-4 pt-2">
                     <label for="validationCustomUsername" class="form-label">Apellido</label>
                     <div class="input-group has-validation">
-                        <input type="text" class="form-control" id="numLegajo" disabled
+                        <input type="text" class="form-control" id="apellido" disabled
                             aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please choose a username.
@@ -72,7 +72,7 @@
 
                 <div class="col-md-4 pt-2">
                     <label for="validationCustom02" class="form-label">Nombres</label>
-                    <input type="text" class="form-control" id="validationCustom02" value="" required>
+                    <input type="text" class="form-control" name="nbre" id="nbre" value="" required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
@@ -83,7 +83,7 @@
                 <div class="col-sm-4">
                     <label for="date" class="form-label">Fecha de Ingreso</label>
                     <!-- Por defecto dejar seleccionado el día de hoy y controlar que la fecha seleccionada no sea mayor a la de hoy -->
-                    <input type="date" class="form-control" data-date-end-date="0d">
+                    <input type="date" class="form-control" data-date-end-date="0d" id="fechaIng" name="fechaIng">
                     <div class="invalid-feedback">
                         Valid last name is required.
                     </div>
@@ -91,7 +91,7 @@
 
                 <div class="col-sm-4">
                     <label for="date" class="form-label">Hora de Ingreso</label>
-                    <input type="time" class="form-control" id="appt">
+                    <input type="time" class="form-control" id="appt" id="hora" name="hora">
                     <div class="invalid-feedback">
                         Valid first name is required.
                     </div>
@@ -101,21 +101,21 @@
                 <div class="col-sm-4">
                     <label for="date" class="form-label">Fecha de Nacimiento</label>
                     <!-- Por defecto dejar seleccionado el día de hoy y controlar que la fecha seleccionada no sea mayor a la de hoy -->
-                    <input type="date" class="form-control" data-date-end-date="0d">
+                    <input type="date" class="form-control" data-date-end-date="0d" id="fechaNac" name="fechaNac">
 
                 </div>
 
                 <div class="col-sm-4">
                     <label for="date" class="form-label">Género</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="sexo" name="sexo">
                         <label class="form-check-label" for="flexRadioDefault1">
                             Femenino
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
-                            checked>
+                            checked >
                         <label class="form-check-label" for="flexRadioDefault2">
                             Masculino
                         </label>
@@ -127,7 +127,7 @@
                     <!-- La hora de temperatura actual, se seteará en el momento en el que ingrese este campo -->
                     <label for="lastName" class="form-label">Temperatura Ambiente en LH</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <input type="text" class="form-control" id="tempAmLH" name="tempAmLH" placeholder="" value="" required>
                         <span class="input-group-text">°</span>
                     </div>
                     <div class="invalid-feedback">
@@ -136,7 +136,7 @@
                 </div>
                 <div class="col-sm-2">
                     <label for="date" class="form-label">Hora de Temperatura Ambiente en LH</label>
-                    <input type="time" class="form-control" id="appt">
+                    <input type="time" class="form-control" id="horaTempLH" name="horaTempLH">
                     <div class="invalid-feedback">
                         Valid first name is required.
                     </div>
@@ -145,8 +145,8 @@
                 <div class="col-sm-2">
                     <label for="lastName" class="form-label pt-4">Temperatura Corporal LH</label>
                     <div class="input-group mb-3">
-                        <input type="number" step=0.1 min="36.1" max="40" class="form-control" id="lastName"
-                            placeholder="36.1" value="" required>
+                        <input type="number" step=0.1 min="36.1" max="40" class="form-control" id="tempCLH"
+                            placeholder="36.1" value="" required name="tempCLH">
                         <span class="input-group-text">°</span>
                     </div>
                     <div class="invalid-feedback">
@@ -155,7 +155,7 @@
                 </div>
                 <div class="col-sm-2">
                     <label for="date" class="form-label">Hora de Temperatura Corporal en LH</label>
-                    <input type="time" class="form-control" id="appt">
+                    <input type="time" class="form-control" id="horaCLH" name="horaCLH">
                     <div class="invalid-feedback">
                         Valid first name is required.
                     </div>
@@ -167,7 +167,7 @@
                 <div class="col-sm-4">
                     <label for="lastName" class="form-label">Posición del Cuerpo en LH</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <input type="text" class="form-control" id="posicion" name="posicion" placeholder="" value="" required>
 
                     </div>
                     <div class="invalid-feedback">
@@ -178,7 +178,7 @@
                 <div class="col-sm-4">
                     <label for="lastName" class="form-label">Pupila Reacción en LH</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <input type="text" class="form-control" id="pupilas" name="pupilas" placeholder="" value="" required>
 
                     </div>
                     <div class="invalid-feedback">
@@ -200,7 +200,7 @@
                 <div class="col-sm-4">
                     <label for="lastName" class="form-label">Peso</label>
                     <div class="input-group mb-3">
-                        <input type="number" class="form-control" id="lastName" placeholder="" value="" required>
+                        <input type="number" class="form-control" id="peso" placeholder="" value="" required>
 
                     </div>
                     <div class="invalid-feedback">
@@ -212,7 +212,7 @@
                 <div class="col-sm-4">
                     <label for="lastName" class="form-label">Talla</label>
                     <div class="input-group mb-3">
-                        <input type="number" class="form-control" id="lastName" placeholder="" value="" required>
+                        <input type="number" class="form-control" id="talla" placeholder="" value="" required>
 
                     </div>
                     <div class="invalid-feedback">
@@ -229,12 +229,13 @@
                         Valid last name is required.
                     </div>
                 </div>
+                
                 <div class="w-100"></div>
 
                 <div class="col-sm-4">
                     <label for="lastName" class="form-label">Raza</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <input type="text" class="form-control" id="raza" placeholder="" value="" required>
 
                     </div>
                     <div class="invalid-feedback">
@@ -244,7 +245,7 @@
                 <div class="col-sm-4">
                     <label for="lastName" class="form-label">Color de Piel</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <input type="text" class="form-control" id="colorPiel" placeholder="" value="" required>
 
                     </div>
                     <div class="invalid-feedback">
@@ -255,7 +256,7 @@
                 <div class="col-sm-4">
                     <label for="lastName" class="form-label">Desarrollo Muscular</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <input type="text" class="form-control" id="desMuscular" placeholder="" value="" required>
 
                     </div>
                     <div class="invalid-feedback">
@@ -366,10 +367,11 @@
 
                 <!-- Button trigger modal -->
                 <div class="d-grid gap-2 col-6 mt-5">
-                    <button type="button" class="btn button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="submit" class="btn button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <h6>Guardar</h6>
 
                     </button>
+                    <input type="submit" value="Enviar">
                 </div>
 
                 <!-- Modal -->

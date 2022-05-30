@@ -1,7 +1,9 @@
 from operator import index
+from tkinter import E
 from django.forms import ValidationError
 from flask import Flask, render_template,request,session,redirect,url_for,flash
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Integer
 from utils.db import db
 from model import  Usuarios,Medicos,Expedientes,Cadaveres,Autopsias
 from flask_login import LoginManager
@@ -20,8 +22,17 @@ def index():
     return render_template("index.html")
 
 @app.route('/estimar')
-def estimar():    
-    return render_template("estimar.html")
+def estimar(): 
+    #profiles=Cadaveres.query.all()
+    result=Expedientes.query.filter(Expedientes.nro_expediente==123)
+    print(result)
+    profiles = db.session.query(Cadaveres).filter(Autopsias.id_expediente == Expedientes.id_e,Autopsias.id_cadaver==Cadaveres.id_c)
+    
+    print (profiles)
+    for dat in profiles:
+        print(dat.getnbre())
+    return render_template("estimar.html",profiles=profiles)     
+   
 
 @app.route('/home', strict_slashes=False)
 def home():
@@ -36,18 +47,31 @@ def NuevaAutopsia():
     return render_template("newAutopsia.html")
 
 
+
+
 @app.route('/IngresoCadaver', methods=['POST'])
 def IngresoCadaver():
-    
+   
    if request.method=='POST':
-        nro_e=request.form.get('nro_e')   
-        flash('Usted va a ingresar un nuevo cadaver en expediente'+nro_e)
-        nbre_e=request.form.get('nbre_e')
-        fecha=request.form.get('fecha_e')
-        direccion=request.form.get('dire')
-        localidad=request.form.get('ciudad')
-        ubicacion=request.form.get('ubicacion')
-        nuevo_cadaver=Cadaveres(nro_e,fecha,nbre_e,direccion,ubicacion,localidad)       
+       # apellido=request.form.get('apellido')   
+        nbre= request.form.get('nbre')
+        print(nbre)  
+        fechaIng=request.form.get('fechaIng')
+        hora=request.form.get('hora')
+        fechaNac=request.form.get('fechaNac')
+        sexo=request.form.get('sexo')
+        temp_a=request.form.get('tempAmLH')
+        hora_temp_lh=request.form.get('horaTempLH')
+        posicion=request.form.get('posicion')
+        pupilas_reaccion=request.form.get('pupilas')
+        peso=request.form.get('peso')
+        talla=request.form.get('talla')
+        domicilio_lh="pp"
+        raza=request.form.get('raza')
+        color_piel=request.form.get('colorPiel')
+        desarrollo_muscular=request.form.get('desMuscular')
+        nuevo_cadaver=Cadaveres("Paola","2020-12-12",	"00:12:12",	"1998-05-12",	"Femenino",	"15",	"12",	"acostada",	"pp_",	"20",	"25",	"pp",
+        "kk","ll","dd")       
         db.session.add(nuevo_cadaver)
         db.session.commit()  
         return redirect(url_for('NuevoCadaver'))
@@ -100,8 +124,9 @@ def registro():
     apellido=request.form.get('new_apelllido')
     email=request.form.get('new_email')
     clave=request.form.get('new_clave')
-    nro_m=request.form.get('nroM')
-    nuevo_usuario=Usuarios(nbre,apellido,dni,usuario,email,clave)
+    nro_m=(request.form.get('nroM'))
+  
+    nuevo_usuario=Usuarios(nbre,apellido,dni,usuario,email,clave,)
     nuevo_medico=Medicos(nro_m)
     db.session.add(nuevo_usuario)
     db.session.add(nuevo_medico)

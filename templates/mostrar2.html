@@ -3,18 +3,15 @@
 {% block content %}
 <script>
   function habilitarForm() {
-    if(document.getElementById("numE").value== ""){
-      alert("Ingrese expediente")
-    }
-     else{
+     
       formulario=document.getElementById("opciones")
      // document.getElementById("opciones").style.height = "100px";
-  
-      formulario.style.visibility= "visible";    
+      formulario.style.visibility= "visible";
+     
       var num=document.getElementById("numE").value
       var element = document.getElementById("mensaje");
       element.innerHTML = "Cadaveres pertenecientes al expediente N°: "+num;
-     }
+     
     //  formulario.style.height = "100px";
       
 
@@ -26,41 +23,41 @@
     <h2>Datación</h2>
     
 </div>
-<div class="row height d-flex justify-content-center align-items-center" style="margin-top: 20px;">
+<div class="row height d-flex justify-content-center align-items-center" style="margin-top: 50px;">
   
   <div class="col-md-8">
-    
+
     <div class="search">
       <i class="fa fa-search"></i>
-      <input type="text" class="form-control" placeholder="Ingrese N° de Expediente" id="numE" >
-      <button class="btn btn-primary" onclick="habilitarForm()">Buscar</button>
+      <input type="text" class="form-control" placeholder="Ingrese N° de Expediente" id="numE">
+      <button class="btn btn-primary" onclick="habilitarForm()" type="submit">Buscar</button>
     </div>    
   </div>  
-
 </div>
 
-<div class="row" style="margin-top: 40px;margin-left: 18%; visibility: hidden" id="opciones">
-  <div id="mensaje" style="margin-left: 17%;margin-bottom: 2%; font-size: x-large;"></div>
-  <form  id="formMostrarC" >  
-    <fieldset style="margin-bottom:5%;">
-      <legend class="d-block mx-auto mb-2">Seleccione un cadaver</legend>
+<div class="row" style="margin-top: 50px;margin-left: 18%; " id="opciones">
+ 
+  <form  id="formMostrarC" ">      
+    <table>
+      <thead>
+         <th>Id</th>
+         <th>First Name</th>
+   
+      </thead>
       {% for data in profiles %}
-      <div>
-      <label>
-          <input type="radio" name="numero" value="1"> {{data.nombre}}
-      </label>
-    </div>
+      <tbody>          
+         <td>{{data.nombre}}</td>        
+         <td><a href="/delete/{{data.id_c}}" type="button">Delete</a></td>
+      </tbody>
       {% endfor%}
-  </fieldset>    
-   
-   
+   </table>
   </form>
-  <legend class="d-block mx-auto mb-2">Seleccione un método para estimar hora de muerte</legend>
+  <div id="mensaje" style="margin-bottom: 20px; font-size: medium;"></div>
     <div class="col-sm-6" style="width:25% ;  " >
       <div class="card">
         <div class="card-body" >
-          <h5 class="card-title">Normograma de Henssge</h5>
-          <img src="/static/img/nomograma.jpg"  width="15%">
+          <h5 class="card-title">Normograma</h5>
+          <img src="/static/img/nomograma.jpg"  width="10%">
           <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
           <a href="#" class="btn btn-primary">Nomograma</a>
         </div>

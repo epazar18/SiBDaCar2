@@ -1,3 +1,4 @@
+from enum import unique
 from re import U
 from tokenize import PseudoExtras
 from xml.dom.pulldom import PROCESSING_INSTRUCTION
@@ -5,7 +6,7 @@ from xmlrpc.client import Boolean, boolean
 from utils.db import db
 from sqlalchemy.types import Enum
 from sqlalchemy.orm import relationship
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey,UniqueConstraint
 
 class EnumRigidez(Enum):  
     one = 'Completo'
@@ -26,7 +27,7 @@ class Usuarios(db.Model):
     nbre_usuario=db.Column(db.String(50))    
     email=db.Column(db.String(60))
     passw=db.Column(db.String(50))
-    
+    UniqueConstraint(nombre)
     def __init__(self,nombre,apellido,dni,nbre_usuario,email,passw):
         self.nombre=nombre
         self.apellido=apellido
@@ -53,6 +54,9 @@ class Expedientes(db.Model):
         self.domicilio_lh=domicilio_lh
         self.ubicacion=ubicacion
         self.localidad=localidad
+
+    def getid(self):
+        return self.id_e
 class Medicos(db.Model):
     id_m=db.Column(db.Integer, primary_key=True)
     nro_matricula=db.Column(db.Integer)
@@ -68,7 +72,7 @@ class Cadaveres(db.Model):
     fecha_nac=db.Column(db.Date)
     sexo=db.Column(db.String(50))
     temp_a=db.Column(db.Float)
-    temp_a_lh=db.Column(db.Float)
+    hora_temp_lh=db.Column(db.Time)
     posicion=db.Column(db.String(100))
     pupilas_reaccion=db.Column(db.String(50))
     peso=db.Column(db.Float)
@@ -78,7 +82,7 @@ class Cadaveres(db.Model):
     color_piel=db.Column(db.String(100))
     desarrollo_muscular=db.Column(db.String(100))
     
-    def __init__(self,nombre,fecha_ing,hora_ingr,fecha_nac,sexo,temp_a,temp_a_lh,posicion,pupilas_reaccion,
+    def __init__(self,nombre,fecha_ing,hora_ingr,fecha_nac,sexo,temp_a,hora_temp_lh,posicion,pupilas_reaccion,
     peso,talla, domicilio_lh,raza,color_piel,desarrollo_muscular):
         self.nombre=nombre
         self.fecha_ing=fecha_ing
@@ -86,7 +90,7 @@ class Cadaveres(db.Model):
         self.hora_ingr=hora_ingr
         self.sexo=sexo
         self.temp_a=temp_a
-        self.temp_a_lh=temp_a_lh
+        self.hora_temp_lh=hora_temp_lh
         self.talla=talla
         self.posicion=posicion
         self.pupilas_reaccion=pupilas_reaccion
@@ -96,6 +100,8 @@ class Cadaveres(db.Model):
         self.domicilio_lh=domicilio_lh
         self.raza=raza
 
+    def getnbre(self):
+        return self.nombre
 
 
 class Autopsias(db.Model):
@@ -116,9 +122,9 @@ class Autopsias(db.Model):
     conjuntivas=db.Column(db.String(100))
     cornea=db.Column(db.String(100))
     pupilas=db.Column(db.String(100))
-    id_expediente =db.Column(db.Integer, ForeignKey(Expedientes.id_e))    
-    id_cadaver=db.Column(db.Integer, ForeignKey(Cadaveres.id_c)) 
-    id_medico=db.Column(db.Integer, ForeignKey(Medicos.id_m)) 
+    id_expediente =db.Column(db.Integer, db.ForeignKey(Expedientes.id_e))    
+    id_cadaver=db.Column(db.Integer, db.ForeignKey(Cadaveres.id_c)) 
+    id_medico=db.Column(db.Integer, db.ForeignKey(Medicos.id_m)) 
     
     def __init__(self,nro_legajo,anio,fecha_inic,temp_a,temp_r,enfriamiento,espasmos,rigidez,rigidez_hasta,rigidez_vencida,livideces,
     color_iris,conjuntivas,cornea,pupilas):
@@ -136,5 +142,7 @@ class Autopsias(db.Model):
         self.conjuntivas=conjuntivas
         self.cornea=cornea
         self.pupilas=pupilas
+
+
 
 
