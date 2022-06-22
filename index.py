@@ -5,7 +5,7 @@ from flask import Flask, render_template,request,session,redirect,url_for,flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer
 from utils.db import db
-from model import  Usuarios,Medicos,Expedientes,Cadaveres,Autopsias
+from model import  Usuarios,Medicos,Expedientes,Cadaveres,Autopsias,expediente_cadaver
 from flask_login import LoginManager
 app = Flask(__name__)
 
@@ -24,13 +24,12 @@ def index():
 @app.route('/estimar')
 def estimar(): 
     #profiles=Cadaveres.query.all()
-    result=Expedientes.query.filter(Expedientes.nro_expediente==123)
-    print(result)
-    profiles = db.session.query(Cadaveres).filter(Autopsias.id_expediente == Expedientes.id_e,Autopsias.id_cadaver==Cadaveres.id_c)
-    
-    print (profiles)
+    result=Expedientes.query.filter(Expedientes.nro_expediente==123).first()
+    id_expediente=result.getid()
+    profiles = db.session.query(Cadaveres).filter(expediente_cadaver.id_e==id_expediente, Cadaveres.id_c==expediente_cadaver.id_c).all()
+    print ("consults ",profiles)
     for dat in profiles:
-        print(dat.getnbre())
+        print("nomrbes ",dat.getnbre())
     return render_template("estimar.html",profiles=profiles)     
    
 
@@ -44,10 +43,11 @@ def expedientes():
 
 @app.route('/NuevaAutopsia', strict_slashes=False)
 def NuevaAutopsia():
-    return render_template("newAutopsia.html")
-
-
-
+    result=Expedientes.query.filter(Expedientes.nro_expediente==123).first()
+    id_expediente=result.getid()
+    profiles = db.session.query(Cadaveres).filter(expediente_cadaver.id_e==id_expediente, Cadaveres.id_c==expediente_cadaver.id_c).all()
+   
+    return render_template("newAutopsia.html",profiles=profiles) 
 
 @app.route('/IngresoCadaver', methods=['POST'])
 def IngresoCadaver():
@@ -70,7 +70,7 @@ def IngresoCadaver():
         raza=request.form.get('raza')
         color_piel=request.form.get('colorPiel')
         desarrollo_muscular=request.form.get('desMuscular')
-        nuevo_cadaver=Cadaveres("Paola","2020-12-12",	"00:12:12",	"1998-05-12",	"Femenino",	"15",	"12",	"acostada",	"pp_",	"20",	"25",	"pp",
+        nuevo_cadaver=Cadaveres(nbre,"2020-12-12",	"00:12:12",	"1998-05-12",	"Femenino",	"15",	"12",	"acostada",	"pp_",	"20",	"25",	"pp",
         "kk","ll","dd")       
         db.session.add(nuevo_cadaver)
         db.session.commit()  

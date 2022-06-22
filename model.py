@@ -57,12 +57,24 @@ class Expedientes(db.Model):
 
     def getid(self):
         return self.id_e
+
 class Medicos(db.Model):
     id_m=db.Column(db.Integer, primary_key=True)
     nro_matricula=db.Column(db.Integer)
         
     def __init__(self,nro_matricula):
         self.nro_matricula=nro_matricula
+
+class expediente_cadaver(db.Model):
+    id_e=db.Column(db.Integer, primary_key=True)
+    id_c=db.Column(db.Integer,primary_key=True)
+        
+    def __init__(self,id_e,id_c):
+        self.id_e=id_e
+        self.id_c=id_c
+
+    def getid_e(self):
+        return self.id_e
 
 class Cadaveres(db.Model):
     id_c=db.Column(db.Integer, primary_key=True)

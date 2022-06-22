@@ -2,59 +2,132 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<script>
+      
+  function habilitarForm() {
+    if(document.getElementById("numE").value== ""){
+      alert("Ingrese expediente")
+    }
+     else{
+      formulario=document.getElementById("opciones")
+     // document.getElementById("opciones").style.height = "100px";
+  
+      formulario.style.visibility= "visible";    
+      var num=document.getElementById("numE").value
+      var element = document.getElementById("mensaje");
+      element.innerHTML = "Cadáveres pertenecientes al expediente N°: "+num;
+     }
+    //  formulario.style.height = "100px";    
+
+  }
+  function MostrarOcultar(valor){
+    var Div1=document.getElementById('div1');  
+    var Div2=document.getElementById('div2');   
+    Div1.style.visibility= "visible"; 
+    Div2.style.visibility= "visible";  
+  
+}
+function MostrarForm(){
+    var Div3=document.getElementById('div3');       
+    Div3.style.visibility= "visible";   
+  
+}
+
+</script>
 <main>
+  
   <div class="py-2 text-center">
-    <img class="d-block mx-auto mb-2" src="{{url_for('static', filename='img/foto1.jpg')}}" alt="logo" width="200">
+    <img class="d-block mx-auto mb-2" src="{{url_for('static', filename='img/registro.png')}}" alt="logo" width="200">
     <h2>Nueva Autopsia</h2>
   </div>
-
-  <div class="modal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
+ 
   <div class="row height d-flex justify-content-center align-items-center">
 
     <div class="col-md-8">
 
       <div class="search">
         <i class="fa fa-search"></i>
-        <input type="text" class="form-control" placeholder="Ingrese N° de Expediente">
-        <button class="btn btn-primary">Buscar</button>
+        <input type="text" class="form-control" placeholder="Ingrese N° de Expediente" id="numE" >
+        <button class="btn btn-primary" onclick="habilitarForm()">Buscar</button>
       </div>
       
     </div>
-    
+
+  </div>
+ 
+  <div class="row" style="margin-top: 40px;margin-left: 18%; visibility: hidden;" id="opciones">
+    <div id="mensaje" style=" margin-top:1%;padding-left: 19%;margin-bottom: 2%; font-size: x-large; font-weight: bold;"></div>
+    <form  id="formMostrarC" >  
+      <fieldset style="margin-bottom:5%;">
+        <legend class="d-block mx-auto mb-2">Seleccione un cadáver</legend>
+        {% for data in profiles %}
+        <div>
+        <label>
+            <input type="radio" name="opciones" value="1" id="nombres" onClick="MostrarOcultar(this.value)"> {{data.nombre}}
+        </label>
+      </div>
+        {% endfor%}
+    </fieldset>  
+    </form>
+  </div>
+  <div class="row height d-flex justify-content-center align-items-center" id="div1" name="div1"style="visibility:hidden;">
+    <div class="col-md-8">
+      <label class="form-label">Médico principal</label>
+      <div class="search">       
+       
+        <select class="form-control select2 " style="width: 100%;" tabindex="-1" aria-hidden="true" data-placeholder="Seleccione un médico">
+          <option selected="selected">Seleccione médico principal</option>
+          <option>Lopez, Juan</option>
+          <option>Carletti, Jose</option>
+          <option>Gomez, Ana</option>
+          <option>Torres, Carlos</option>
+          <option>Alcaraz, Carina</option>
+          <option>Perez, Fabian</option>
+      </select>
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="conteiner">
-    <form class="needs-validation" novalidate>
+  <div class="w-100" style="margin-top:20px;"></div>
 
+  <div class="row height d-flex justify-content-center align-items-center" id="div2" name="div2"style="visibility:hidden;">
 
-      <div class="row justify-content-md-center">
-
-         
+    <div class="col-md-8">
+      <label for="validationCustomUsername" class="form-label">Médicos supervisores</label>
+      <div class="search " >      
         
+        <select class="form-control select2" multiple="" data-placeholder="Seleccione médico/s" tabindex="-1" aria-hidden="true">
+          <option>Lopez, Jose</option>
+          <option>Alcaraz, Eduardo</option>
+          <option>Perez, Ana</option>
+          <option>Gomez, Leticia</option>
+          <option>Palermo, Juan</option>
+          <option>Texas, Leandro</option>
+          <option>Ropes, Carina</option>
+      </select> 
+      </div>
+      <div style="margin-top:20px ;">
+      <button class="btn btn-primary" onclick="MostrarForm()">Seleccionar</button>
+    </div>
+    </div>
 
+  </div>
+
+  
+  <div class="conteiner" id="div3" style="visibility: hidden; margin-top: 10px;">
+    <form class="needs-validation" novalidate>
+      <div class="row justify-content-md-center">
         <div class="w-100"></div>
-
-        <div class="col-md-4 pt-2">
-          <label for="validationCustomUsername" class="form-label">N° de Legajo</label>
+        <div style="font-size:x-large; text-align:center ;font-weight:bold ;"><label  class="form-label">Ingrese los datos </label></div>
+        <div class="col-md-4 pt-2">          
+          
+          <label  class="form-label">N° de Legajo</label>
           <div class="input-group has-validation">
-            <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+            <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend"
+              required>
             <div class="invalid-feedback">
               Please choose a username.
             </div>
@@ -71,8 +144,30 @@
 
         <div class="w-100"></div>
 
-        <div class="col-sm-2 ">
-          <label for="lastName" class="form-label">Hora de Temperatura AU</label>
+        <!--Fecha y Hora Inicio-->
+        <div class="col-sm-4">
+          <label for="numExpediente" class="form-label pt-2">Fecha</label>
+          <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <label for="numExpediente" class="form-label pt-2">Hora de Inicio</label>
+          <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+        <!-- Fin-->
+        <div class="w-100"></div>
+
+
+
+        <!-- Temperatura Ambiente y Rectal-->
+        <div class="col-sm-4">
+          <label for="lastName" class="form-label">Temperatura Ambiente</label>
           <div class="input-group mb-3">
             <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
             <span class="input-group-text">°</span>
@@ -82,10 +177,28 @@
           </div>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-4">
           <label for="lastName" class="form-label">Temperatura Rectal</label>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+            <input type="number" step=0.1 min="36.1" max="40" class="form-control" id="lastName" placeholder="36.1"
+              value="" required>
+            <span class="input-group-text">°</span>
+          </div>
+          <div class="invalid-feedback">
+            Valid last name is required.
+          </div>
+        </div>
+        <!-- Fin-->
+
+        <div class="w-100"></div>
+
+
+        <!-- Temperatura Ambiente y Rectal-->
+        <div class="col-sm-4">
+          <label for="lastName" class="form-label">Temperatura Cuerpo</label>
+          <div class="input-group mb-3">
+            <input type="number" step=0.1 min="36.1" max="40" class="form-control" id="lastName" placeholder="36.1"
+              value="" required>
             <span class="input-group-text">°</span>
           </div>
           <div class="invalid-feedback">
@@ -93,18 +206,7 @@
           </div>
         </div>
 
-        <div class="col-sm-2">
-          <label for="lastName" class="form-label">Temperatura Cuerpo</label>
-          <div class="input-group mb-3">
-            <input type="number" step=0.1 min="36.1" max="40" class="form-control" id="lastName" placeholder="36.1" value="" required>
-            <span class="input-group-text">°</span>
-          </div>
-          <div class="invalid-feedback">
-            Valid last name is required.
-          </div>
-        </div> 
-
-        <div class="col-sm-2">
+        <div class="col-sm-4">
           <label for="lastName" class="form-label">Temperatura Hepática</label>
           <div class="input-group mb-3">
             <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
@@ -114,18 +216,60 @@
             Valid last name is required.
           </div>
         </div>
+        <!-- Fin-->
+
         <div class="w-100"></div>
+
+        <!--Enfriamiento y Espasmos-->
         <div class="col-sm-4">
-          <label for="numExpediente" class="form-label pt-2">Livideces</label>
+          <label for="numExpediente" class="form-label pt-2">Enfriamiento</label>
           <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
           <div class="invalid-feedback">
             Valid first name is required.
           </div>
         </div>
 
+        <div class="col-sm-4">
+          <label for="numExpediente" class="form-label pt-2">Espasmos</label>
+          <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+        <!-- Fin-->
         <div class="w-100"></div>
 
+
+        <!--Enfriamiento y Espasmos-->
         <div class="col-sm-4">
+          <label for="numExpediente" class="form-label pt-2">Enfriamiento</label>
+          <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <label for="date" class="form-label pt-2">Espasmos</label>
+          <div class="w-100"></div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="flexRadioEspasmos" id="flexRadioEspasmos1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Si
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="flexRadioEspasmos" id="flexRadioDefaultEspasmos2"
+              checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+              No
+            </label>
+          </div>
+        </div>
+        <!-- Fin-->
+        <div class="w-100"></div>
+
+        <!--Rigidez - Hasta-Rota-Vencida-->
+        <div class="col-sm-2">
           <label for="numExpediente" class="form-label pt-2">Rigidez</label>
           <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
           <div class="invalid-feedback">
@@ -133,17 +277,89 @@
           </div>
         </div>
 
-        <div class="col-sm-4">
-          <label for="numExpediente" class="form-label pt-2">Opacidad de Cornea</label>
+
+
+        <div class="col-sm-2">
+          <label for="numExpediente" class="form-label pt-2">Rigidez Hasta</label>
           <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
           <div class="invalid-feedback">
             Valid first name is required.
           </div>
         </div>
+        <div class="col-sm-2">
+          <label for="numExpediente" class="form-label pt-2">Rigidez Rota en</label>
+          <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <label for="numExpediente" class="form-label pt-2">Rigidez Vencida</label>
+          <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+        <!-- Fin-->
+
         <div class="w-100"></div>
 
+        <!--Livideces - Livideces Ubicación-->
         <div class="col-sm-4">
-          <label for="numExpediente" class="form-label pt-2">Putrefacción grado</label>
+          <label for="date" class="form-label pt-2">Livideces</label>
+          <div class="w-100"></div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="flexRadioLivideces" id="flexRadioLivideces1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Si
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="flexRadioLivideces" id="flexRadioDefaultLivideces2"
+              checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+              No
+            </label>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <label for="numExpediente" class="form-label pt-2">Livideces - Ubicación</label>
+          <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+        <!-- Fin-->
+
+        <div class="w-100"></div>
+
+        <!--Putrefacción - Cuales-->
+        <div class="col-sm-8">
+          <label for="date" class="form-label pt-2">Fenómenos de Putrefacción</label>
+          <div class="w-100"></div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="flexRadioFPutrefaccion" id="flexRadioFPutrefaccion1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Si
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="flexRadioFPutrefaccion" id="flexRadioFPutrefaccion2"
+              checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+              No
+            </label>
+          </div>
+        </div>
+        <!-- Fin-->
+
+        <div class="w-100"></div>
+
+        <!--Iris - Conjuntivas-->
+        <div class="col-sm-4">
+          <label for="numExpediente" class="form-label pt-2">Color Iris</label>
           <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
           <div class="invalid-feedback">
             Valid first name is required.
@@ -151,14 +367,54 @@
         </div>
 
         <div class="col-sm-4">
-          <label for="numExpediente" class="form-label pt-2">Conenido Intestinal</label>
+          <label for="numExpediente" class="form-label pt-2">Conjuntivas</label>
+          <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+        <!-- Fin-->
+
+        <div class="w-100"></div>
+
+        <!--Corneas - Pupilas-->
+        <div class="col-sm-4">
+          <label for="numExpediente" class="form-label pt-2">Corneas</label>
           <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
           <div class="invalid-feedback">
             Valid first name is required.
           </div>
         </div>
 
-        
+        <div class="col-sm-4">
+          <label for="numExpediente" class="form-label pt-2">Pupilas</label>
+          <input type="text" class="form-control" id="numExpediente" placeholder="" value="" required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
+        </div>
+        <!-- Fin-->
+
+        <div class="w-100"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="w-100"></div>
 
         <!-- Button trigger modal -->

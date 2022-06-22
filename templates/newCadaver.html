@@ -4,7 +4,7 @@
 {% block content %}
 <main>
     <div class="py-2 text-center">
-        <img class="d-block mx-auto mb-2" src="{{url_for('static', filename='img/foto1.jpg')}}" alt="logo" width="200">
+        <img class="d-block mx-auto mb-2" src="{{url_for('static', filename='img/registro.png')}}" alt="logo" width="200">
         <h2>Nuevo Cadaver</h2>
     </div>
 
@@ -39,30 +39,28 @@
 
     </div>
     <script>
-        function habilitarForm() {
-           
+        function habilitarForm() {           
             formulario=document.getElementById("form-cadaver")
             var num=document.getElementById("numE").value
             var element = document.getElementById("mensaje");
-            element.innerHTML = "Usted va a ingresar un cadaver en el expdiente N°: "+num;
+            element.innerHTML = "Usted va a ingresar datos de un cadáver perteneciente al expediente N°: "+num;
             formulario.style.display = 'block';
             // document.getElementById("form-cadaver").submit();
-
         }
     </script>
 
     <div class="conteiner">
         <form  novalidate id="form-cadaver" style="display:none" action="/IngresoCadaver" method="POST">
                 
-          <div id="mensaje" class="text-center" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ; margin-top: 20px;margin-bottom: 20px;"></div>
-                <div class="row justify-content-md-center">
+            <div id="mensaje" style=" margin-top:2%;margin-left: 19%;margin-bottom: 2%; font-size: x-large; font-weight: bold;"></div>
+            <div class="row justify-content-md-center">
 
                 <div class="w-100"></div>
 
                 <div class="col-md-4 pt-2">
                     <label for="validationCustomUsername" class="form-label">Apellido</label>
                     <div class="input-group has-validation">
-                        <input type="text" class="form-control" id="apellido" disabled
+                        <input type="text" class="form-control" id="apellido" 
                             aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please choose a username.
@@ -280,98 +278,238 @@
                     </div>
                 </div>
                 <div class="w-100"></div>
-
-                <div class="col-sm-2">
+                <div class="col-sm-8">
                     <label for="date" class="form-label">Encontrado</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="enterrado"
+                    <div class="w-100"></div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioEncontrado" id="enterrado"
                             onclick="checkfunction()">
                         <label class="form-check-label" for="flexRadioDefault1">
                             Enterrado
                         </label>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="sumergido" checked>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioEncontrado" id="sumergido"
+                            onclick="checkfunction()">
                         <label class="form-check-label" for="flexRadioDefault2">
                             Sumergido
                         </label>
                     </div>
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="hide-me">
-                        <div class="card" id="card-select">
-                            <div class="card-body">
-                                <h5 class="card-title">Enterrado</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioEncontrado" id="ninguno" checked
+                            onclick="checkfunction()">
+                        <label class="form-check-label" for="flexRadioDefault3">
+                            Ninguno
+                        </label>
                     </div>
-
                 </div>
-                <div class="col-sm-4">
+
+                <div class="w-100"></div>
+
+
+                <div id="divEnterrado" class="col-sm-8" hidden>
                     <div class="card">
+                        <div class="card-header py-3">
+                            <h5 class="mb-0">Enterrado</h5>
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title">Sumergido</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional
-                                content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <form>
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <label for="lastName" class="form-label">Metros Enterrado</label>
+                                        <div class="input-group mb-3">
+                                            <input type="number" class="form-control" id="mtsEnterrado" placeholder=""
+                                                value="" required>
+                                            <span class="input-group-text">m</span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label for="lastName" class="form-label">Tipo de Suelo</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="tipoSuelo" placeholder=""
+                                                value="">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <label for="lastName" class="form-label">Humedad de Suelo</label>
+                                        <div class="input-group mb-3">
+                                            <input type="number" class="form-control" id="humedadSuelo" placeholder=""
+                                                value="">
+                                            <span class="input-group-text">H</span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label for="lastName" class="form-label">Tipo de Insectos</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="tipoSuelo" placeholder=""
+                                                value="">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
 
-                <script>
 
+                <div id="divSumergido" class="col-sm-8" hidden>
+                    <div class="card">
+                        <div class="card-header py-3">
+                            <h5 class="mb-0">Sumergido</h5>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <label for="lastName" class="form-label">Temperatura de Agua</label>
+                                        <div class="input-group mb-3">
+                                            <input type="number" class="form-control" id="mtsEnterrado" placeholder=""
+                                                value="" required>
+                                            <span class="input-group-text">°</span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label for="lastName" class="form-label">Profundidad de Encuentro</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="tipoSuelo" placeholder=""
+                                                value="">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-sm-3">
+                                        <label for="date" class="form-label">Peces</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="flexRadioPeces"
+                                                id="flexRadioDefault1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                Si
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="flexRadioPeces"
+                                                id="flexRadioDefault2" checked>
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                No
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label for="lastName" class="form-label">Tipo de Peces</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="tipoSuelo" placeholder=""
+                                                value="">
+
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label for="lastName" class="form-label">Grado de Manipulación</label>
+                                        <div class="input-group mb-3">
+                                            <input type="number" class="form-control" id="mtsEnterrado" placeholder=""
+                                                value="" required>
+                                            <span class="input-group-text">°</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <label for="date" class="form-label pt-2">Quemado</label>
+                    <div class="w-100"></div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioQuemado" id="quemadoSi"
+                            onclick="checkSelectQuemado()">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Si
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="flexRadioQuemado" id="quemadoNo"
+                            onclick="checkSelectQuemado()">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <div id="divQuemado" class="col-sm-8" hidden>
+                    <div class="card">
+                        <div class="card-header py-3">
+                            <h5 class="mb-0">Quemado</h5>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <label for="lastName" class="form-label">Grado de Quemaduras</label>
+                                        <div class="input-group mb-3">
+                                            <input type="number" class="form-control" id="mtsEnterrado" placeholder=""
+                                                value="" required>
+                                            <span class="input-group-text">°</span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label for="lastName" class="form-label">Partes del Cuerpo Quemados</label>
+                                        <textarea class="form-control" aria-label="With textarea"></textarea>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    function checkSelectQuemado() {
+                        var checkQS = document.getElementById("quemadoSi");
+                        var checkQN = document.getElementById("quemadoNo");
+                        if (checkQS.checked == true) {
+                            console.log("Quemado");
+                            document.getElementById("divQuemado").hidden = false;
+                        }
+                        if (checkQN.checked == true) {
+                            console.log("Quemado No");
+                            document.getElementById("divQuemado").hidden = true;
+                        }
+                    }
                     function checkfunction() {
                         var checkE = document.getElementById("enterrado");
+                        var checkS = document.getElementById("sumergido");
+                        var checkN = document.getElementById("ninguno");
                         if (checkE.checked == true) {
                             console.log("Enterrado");
-                            // Resetear, por si acaso has estado jugando con la otra propiedad
-                            $('hide-me').css('visibility', 'visible');
-
-                            if ($('hide-me').is(":visible")) {
-                                $('hide-me').css('display', 'none');
-                            } else {
-                                $('hide-me').css('display', 'block');
-                            }
+                            document.getElementById("divEnterrado").hidden = false;
+                            document.getElementById("divSumergido").hidden = true;
                         }
-                        else {
-                            console.log("+");
+                        if (checkS.checked == true) {
+                            console.log("Sumergido");
+
+                            document.getElementById("divEnterrado").hidden = true;
+                            document.getElementById("divSumergido").hidden = false;
+                        }
+                        if (checkN.checked == true) {
+                            console.log("Ninguno");
+                            document.getElementById("divEnterrado").hidden = true;
+                            document.getElementById("divSumergido").hidden = true;
                         }
                     }
 
-                    /*$('#displayNone').click(function (e) {
 
-
-                    });
-
-                    $('#visibilityHidden').click(function (e) {
-
-                        // Resetear, por si acaso has estado jugando con la otra propiedad
-                        $('#hide-me').css('display', 'block');
-
-                        if ($('#hide-me').css('visibility') != 'hidden') {
-                            $('#hide-me').css('visibility', 'hidden');
-                        } else {
-                            $('#hide-me').css('visibility', 'visible');
-                        }
-                    });*/
                 </script>
-
-
-
-
                 <div class="w-100"></div>
 
                 <!-- Button trigger modal -->
                 <div class="d-grid gap-2 col-6 mt-5">
-                    <button type="submit" class="btn button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <h6>Guardar</h6>
 
                     </button>
-                    <input type="submit" value="Enviar">
+                    
                 </div>
 
                 <!-- Modal -->
@@ -388,8 +526,8 @@
                                 Se generó el Cadaver con el ID #00123
                             </div>
                             <div class="modal-footer">
-                                <button type="button" href="{{ url_for('home') }}" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit"  class="btn btn-secondary"
+                  data-bs-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>

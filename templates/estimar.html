@@ -13,7 +13,7 @@
       formulario.style.visibility= "visible";    
       var num=document.getElementById("numE").value
       var element = document.getElementById("mensaje");
-      element.innerHTML = "Cadaveres pertenecientes al expediente N°: "+num;
+      element.innerHTML = "Cadáveres pertenecientes al expediente N°: "+num;
      }
     //  formulario.style.height = "100px";
       
@@ -40,10 +40,10 @@
 </div>
 
 <div class="row" style="margin-top: 40px;margin-left: 18%; visibility: hidden" id="opciones">
-  <div id="mensaje" style="margin-left: 17%;margin-bottom: 2%; font-size: x-large;"></div>
+  <div id="mensaje" style=" margin-top:1%;margin-left: 19%;margin-bottom: 2%; font-size: x-large; font-weight: bold;"></div>
   <form  id="formMostrarC" >  
     <fieldset style="margin-bottom:5%;">
-      <legend class="d-block mx-auto mb-2">Seleccione un cadaver</legend>
+      <legend class="d-block mx-auto mb-2">Seleccione un cadáver</legend>
       {% for data in profiles %}
       <div>
       <label>
